@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mantic": {
+      "type": "http",
+      "url": "https://api.mantic.com/mcp"
+    }
+  }
+}
