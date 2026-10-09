@@ -1,0 +1,33 @@
+{
+  "name": "mantic-mcp",
+  "version": "1.0.2",
+  "description": "Mantic helps users explore probabilistic forecasts about geopolitics, business, policy, markets, technology, and culture. Search accessible questions and dashboards, inspect forecasts and their available reasoning, compare forecast history, and explore conditional scenarios and probability distributions. Save and revise question drafts, then create a question and request a one-time forecast using your Mantic account's question-creation quota. Forecast access can generate billable usage under your account settings.",
+  "author": {
+    "name": "Mantic",
+    "url": "https://mantic.com"
+  },
+  "homepage": "https://app.mantic.com/",
+  "repository": "https://github.com/mantic-ai/skills",
+  "keywords": ["forecasting", "predictions", "mantic", "mcp"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Mantic",
+    "shortDescription": "Explore and request forecasts",
+    "longDescription": "Mantic helps users explore probabilistic forecasts about geopolitics, business, policy, markets, technology, and culture. Search accessible questions and dashboards, inspect forecasts and their available reasoning, compare forecast history, and explore conditional scenarios and probability distributions. Save and revise question drafts, then create a question and request a one-time forecast using your Mantic account's question-creation quota. Forecast access can generate billable usage under your account settings.",
+    "developerName": "Mantic",
+    "category": "Research",
+    "capabilities": ["Interactive"],
+    "websiteURL": "https://app.mantic.com/",
+    "privacyPolicyURL": "https://app.mantic.com/about?tab=privacy",
+    "termsOfServiceURL": "https://app.mantic.com/about?tab=terms",
+    "defaultPrompt": [
+      "What does Mantic forecast for the next Fed rate decision?",
+      "Show me the questions on my Mantic dashboard.",
+      "Explain why Mantic's forecast on this question changed."
+    ],
+    "composerIcon": "./assets/mantic-icon.svg",
+    "logo": "./assets/mantic-icon.svg",
+    "brandColor": "#4B59EC"
+  }
+}

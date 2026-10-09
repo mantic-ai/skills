@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "mantic",
+  "description": "Mantic's AI forecasts in your agent: the Mantic MCP server and skills for using it well.",
+  "owner": {
+    "name": "Mantic",
+    "url": "https://mantic.com"
+  },
+  "plugins": [
+    {
+      "name": "mantic-mcp",
+      "source": "./plugins/mantic-mcp",
+      "category": "productivity",
+      "homepage": "https://github.com/mantic-ai/skills/tree/main/plugins/mantic-mcp"
+    }
+  ]
+}

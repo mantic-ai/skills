@@ -1,0 +1,20 @@
+{
+  "name": "mantic",
+  "interface": {
+    "displayName": "Mantic"
+  },
+  "plugins": [
+    {
+      "name": "mantic-mcp",
+      "source": {
+        "source": "local",
+        "path": "./plugins/mantic-mcp"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
+    }
+  ]
+}
