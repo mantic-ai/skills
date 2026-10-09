@@ -1,8 +1,8 @@
 {
   "name": "mantic-mcp",
-  "displayName": "Mantic MCP",
+  "displayName": "Mantic",
   "version": "1.0.1",
-  "description": "Mantic MCP server for interactive AI forecasts: search questions, view forecasts, render CDF charts, and explain what drives a forecast.",
+  "description": "Mantic helps users explore probabilistic forecasts about geopolitics, business, policy, markets, technology, and culture. Search accessible questions and dashboards, inspect forecasts and their available reasoning, compare forecast history, and explore conditional scenarios and probability distributions. Save and revise question drafts, then create a question and request a one-time forecast using your Mantic account's question-creation quota. Forecast access can generate billable usage under your account settings.",
   "author": {
     "name": "Mantic",
     "url": "https://mantic.com"

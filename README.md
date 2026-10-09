@@ -11,7 +11,7 @@ your agent.
 
 | Plugin                              | Hosts         | Description                                                    | Capabilities                                         |
 | ----------------------------------- | ------------- | -------------------------------------------------------------- | ---------------------------------------------------- |
-| [mantic-mcp](plugins/mantic-mcp/)   | Claude, Codex | Search, view and explain Mantic forecasts                      | Mantic MCP server; `using-mantic` and `forecast-explainer` skills |
+| [mantic-mcp](plugins/mantic-mcp/)   | Claude, Codex | Explore and request forecasts                                  | Mantic MCP server; `using-mantic` and `forecast-explainer` skills |
 
 The Mantic MCP server signs you in to your Mantic account the first time a tool
 is used; there is nothing to configure.
