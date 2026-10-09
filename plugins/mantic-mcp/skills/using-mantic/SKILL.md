@@ -251,6 +251,7 @@ question as if it were theirs.
 | The current forecast for one question, with a chart | `view_question` |
 | Why Mantic forecasts what it does | `get_forecast`, whose `reasoning` field holds the written report |
 | Why the latest forecast changed | `view_question`, whose `changes_from_previous` explains it when one is stored |
+| How a forecast was built: its paths, their likelihoods and drivers | `get_forecast_structure`, only when the user asks to dig into it and `view_question` reports `structure_available` as true |
 | How a forecast has moved over time | `get_question_forecasts` |
 | What would change the forecast | `view_scenarios`, then `get_scenario_cdfs` for exact probabilities |
 | The probability above or below a threshold | `get_forecast_cdf` with `ticks` |

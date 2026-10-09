@@ -56,6 +56,30 @@ in the `reasoning` text. Don't add facts from your own knowledge under
 Mantic's name. If the report doesn't cover something the user asks about, say
 so rather than filling the gap yourself.
 
+### When the forecast recorded its structure
+
+Don't fetch the structure for a first explanation. Call
+`get_forecast_structure` with the latest forecast's ID only when the user asks
+to dig deeper (how the forecast was built, which scenarios it weighs, how
+likely each is, or what drives it) and `view_question` reported
+`structure_available` as true. It lists the paths the forecast takes to its
+result, how likely each is, where each lands, why each is in the forecast, and
+the inputs that drive the spread. Answer with the two or three largest paths,
+their shares and where each lands, and the input that drives the most spread.
+
+- A path's `share` is of all of its sample's simulations, not of the path
+  above it. A nested path also gives `share_of_parent`.
+- The forecast pools its samples by `weight`. If the samples disagree, say
+  so rather than averaging them yourself.
+- Quote figures only as the structure states them. Never compute a new
+  probability or value from it.
+- Leave out the `[n]` source markers in the structure's prose.
+- If `omitted` lists anything, say the account is abridged.
+
+If the user asks to dig deeper and `structure_available` is false, the
+forecast recorded no structure, so explain it from the `reasoning` alone and
+present no scenarios, scenario chances or drivers as Mantic's.
+
 ## 4. Show how it has moved
 
 Call `get_question_forecasts` for the question with `show_forecasts: true`.
@@ -183,7 +207,8 @@ Keep it short enough to read in a minute:
    including comments of your own on the forecast.
 2. **Why.** At most three bullets from the reasoning, keeping its source
    links on the facts you use. A base rate or historical comparison goes in
-   one of the three, not after them.
+   one of the three, not after them. When the forecast recorded its
+   structure, lead with its largest paths and their shares instead.
 3. **Main uncertainty.** One sentence on the uncertainty Mantic lists first,
    plus at most one line listing any others. Where it turns on what counts
    for resolution, say what the `clarifications` require.
