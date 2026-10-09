@@ -49,8 +49,7 @@ desktop and mobile apps.
 
 ### Updating
 
-Third-party marketplaces don't update automatically by default. In Claude
-Code, update with:
+To update in Claude Code:
 
 ```bash
 claude plugin marketplace update mantic
