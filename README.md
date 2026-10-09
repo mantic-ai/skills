@@ -13,9 +13,6 @@ your agent.
 | ----------------------------------- | ------------- | -------------------------------------------------------------- | ---------------------------------------------------- |
 | [mantic-mcp](plugins/mantic-mcp/)   | Claude, Codex | Explore and request forecasts                                  | Mantic MCP server; `using-mantic` and `forecast-explainer` skills |
 
-The Mantic MCP server signs you in to your Mantic account the first time a tool
-is used; there is nothing to configure.
-
 ## Install in Claude
 
 The marketplace is called `mantic`, so plugins install as
