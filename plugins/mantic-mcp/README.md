@@ -1,27 +1,18 @@
 # Mantic MCP plugin
 
-[Mantic](https://mantic.com) is an AI forecasting system that predicts global
-events — geopolitics, business, policy, markets, technology and culture — with
-explicit reasoning and supporting references, updated as new information
-arrives.
+[Mantic](https://mantic.com) is an AI forecasting system. This plugin bundles
+the Mantic MCP server (`https://api.mantic.com/mcp`) to search questions, view
+forecasts and render CDF charts, plus two skills:
 
-This plugin bundles the **Mantic MCP server** (`https://api.mantic.com/mcp`)
-for interactive lookups: search questions, view a question, read forecasts
-and render CDF charts. Your agent authenticates with it on first use; there is
-nothing to configure.
-
-It also includes two skills:
-
-- `using-mantic` sets out how Claude presents Mantic forecasts: always with
-  their date and link, and with Mantic's view kept separate from Claude's own.
-- `forecast-explainer` explains a single forecast: what Mantic predicts, why,
-  how the forecast has moved, and which scenarios would change it.
+- `using-mantic` presents forecasts with their date and link, keeping Mantic's
+  view separate from the agent's own.
+- `forecast-explainer` explains what Mantic predicts, why, how the forecast has
+  moved, and what would change it.
 
 ## Install
 
-The plugin is published in the [mantic-ai/skills](https://github.com/mantic-ai/skills)
-marketplace, whose README has install steps for Claude Code, Claude Desktop,
-claude.ai and Codex. In Claude Code:
+See the [mantic-ai/skills README](https://github.com/mantic-ai/skills) for
+every app. In Claude Code:
 
 ```
 claude plugin marketplace add mantic-ai/skills
