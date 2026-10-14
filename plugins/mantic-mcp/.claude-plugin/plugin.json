@@ -1,7 +1,7 @@
 {
   "name": "mantic-mcp",
   "displayName": "Mantic",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Mantic helps users explore probabilistic forecasts about geopolitics, business, policy, markets, technology, and culture. Search accessible questions and dashboards, inspect forecasts and their available reasoning, compare forecast history, and explore conditional scenarios and probability distributions. Save and revise question drafts, then create a question and request a one-time forecast using your Mantic account's question-creation quota. Forecast access can generate billable usage under your account settings.",
   "author": {
     "name": "Mantic",
@@ -10,5 +10,8 @@
   "homepage": "https://app.mantic.com/",
   "repository": "https://github.com/mantic-ai/skills",
   "license": "MIT",
-  "keywords": ["forecasting", "predictions", "mantic", "mcp"]
+  "keywords": ["forecasting", "predictions", "mantic", "mcp"],
+  "icon": "./assets/mantic-icon.svg",
+  "privacyPolicyUrl": "https://app.mantic.com/about?tab=privacy",
+  "termsOfServiceUrl": "https://app.mantic.com/about?tab=terms"
 }

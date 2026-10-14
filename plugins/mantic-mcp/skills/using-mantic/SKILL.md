@@ -253,7 +253,7 @@ question as if it were theirs.
 | Why the latest forecast changed | `view_question`, whose `changes_from_previous` explains it when one is stored |
 | How a forecast was built: its paths, their likelihoods and drivers | `get_forecast_structure`, only when the user asks to dig into it and `view_question` reports `structure_available` as true |
 | How a forecast has moved over time | `get_question_forecasts` |
-| What would change the forecast | `view_scenarios`, then `get_scenario_cdfs` for exact probabilities |
+| What would change the forecast | `view_scenarios`, unless `view_question` reports `has_scenarios` as false, then `get_scenario_cdfs` for exact probabilities |
 | The probability above or below a threshold | `get_forecast_cdf` with `ticks` |
 | What is on one of their dashboards | `list_dashboards`, then `search_dashboard_questions` |
 

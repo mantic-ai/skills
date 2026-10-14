@@ -131,15 +131,16 @@ under your view, in italics.
 
 ## 5. Show what would change it
 
-Call `view_scenarios`. Each scenario is a related event, together with where
+Unless `view_question` reports `has_scenarios` as false, call
+`view_scenarios`. Each scenario is a related event, together with where
 Mantic's forecast lands if that event happens and if it doesn't. Report the
 one or two scenarios whose branches sit furthest apart. These are the
 developments that would move the forecast most.
 
 If the user asks about a specific threshold under a scenario, call
-`get_scenario_cdfs` with `ticks`. If the question has no scenarios, skip this
-step and leave the section out of the explanation; don't mention that there
-are none.
+`get_scenario_cdfs` with `ticks`. If `has_scenarios` is false, skip this step
+without calling `view_scenarios`. If the question has no scenarios, leave the
+section out of the explanation; don't mention that there are none.
 
 State that scenario outcomes are Mantic's conditional estimates, not events
 that have happened.
