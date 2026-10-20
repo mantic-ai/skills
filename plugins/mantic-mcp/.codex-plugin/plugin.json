@@ -1,6 +1,6 @@
 {
   "name": "mantic-mcp",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Mantic helps users explore probabilistic forecasts about geopolitics, business, policy, markets, technology, and culture. Search accessible questions and dashboards, inspect forecasts and their available reasoning, compare forecast history, and explore conditional scenarios and probability distributions. Save and revise question drafts, then create a question and request a one-time forecast using your Mantic account's question-creation quota. Forecast access can generate billable usage under your account settings.",
   "author": {
     "name": "Mantic",

@@ -129,6 +129,9 @@ topic, use theirs.
   - categorical: the leading option and its probability
 - **25th–75th percentile** is the range between those two percentiles for
   numerical and date questions. Use "—" for other types.
+- **The median** is `percentiles["50"]`. The separate `median_date` and
+  `median_value` fields are deprecated and often null even when the median
+  exists, so don't treat a null there as a missing median.
 - **Missing percentiles.** A date forecast can lack an upper percentile, or
   even its median, when Mantic doesn't expect the event within the question's
   window. Write "after" plus the forecast's horizon, the last date in its
@@ -165,7 +168,7 @@ one line offering at most two or three follow-ups. Pick the ones that fit:
 - how a forecast has moved (`get_question_forecasts`)
 - adding questions to one of their dashboards, after a `search_questions`
   search
-- drafting a new question, when coverage is thin (`create_question_draft`)
+- setting up a new forecast, when coverage is thin (the `forecast-drafting` skill)
 - grouping the table by topic, or sorting it, for example by probability
 
 Don't offer something you've just done. Don't offer to refresh a forecast or
@@ -213,8 +216,8 @@ write as though you reviewed all of Mantic's coverage.
 
 When a search returns nothing relevant, or only loosely related questions,
 say so. Do not stretch a question about a different event, date, or threshold
-to fit. Offer to draft a new question instead, using `create_question_draft`,
-if the user wants Mantic to forecast it.
+to fit. Offer to set up a new forecast instead, following the
+`forecast-drafting` skill, if the user wants Mantic to forecast it.
 
 ## Read the question exactly
 
@@ -225,7 +228,9 @@ define it. Each question carries two texts alongside its title:
   including any deadline, threshold, source or edge case, for example
   "resolves on the date both parties sign a written framework; a verbal
   declaration doesn't count".
-- `supplementary_information`: background context for the question.
+- `supplementary_information`: the question's public description, factual
+  background for the question. It is not Additional context, the private
+  context a user adds to refine a forecast.
 
 Read `clarifications` before you interpret, compare or explain a forecast,
 and when you decide whether a search result actually matches what the user
