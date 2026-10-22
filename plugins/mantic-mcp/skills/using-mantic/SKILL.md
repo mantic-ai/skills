@@ -47,8 +47,9 @@ for example whether it's asking if something happens or when.
 A forecast is only meaningful alongside when it was made. For every forecast
 you mention, give:
 
-- the value: the probability, the median and a range, or the leading
-  categories
+- the value as the question page states it: the `headline` that
+  `view_question` gives when you have it, otherwise the figures the table
+  below uses
 - the date it was made, from the forecast's `date` field
 - the question's public page, `https://app.mantic.com/question/{id}`, as a
   clickable link
@@ -124,8 +125,16 @@ topic, use theirs.
   full. A short title that changes the meaning is worse than a long one.
 - **Forecast** depends on the question type:
   - yes/no: the probability and its estimative word
-  - numerical: the median, with units
-  - date: the median date, to the day
+  - yes/no by a deadline (type `event`): the probability by that date, its
+    estimative word and the date, such as "29% (realistic possibility) by
+    31 Dec 2026"
+  - numerical: the median, with units, written as "median 2.8%". The
+    question page leads with the most likely value and its 80% range
+    instead, which `view_question`'s headline gives
+  - date: the median date, to the day. The question page gives the median
+    only when it falls within the forecast's default range; otherwise it gives
+    the chance by the end of that range, such as "20% by 1 Mar 2027", and the
+    chance it never happens. Use `view_question`'s headline for that
   - categorical: the leading option and its probability
 - **25th–75th percentile** is the range between those two percentiles for
   numerical and date questions. Use "—" for other types.
