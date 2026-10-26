@@ -212,10 +212,12 @@ rule.
 
 ## Keep Mantic's sources
 
-Mantic's `reasoning` text cites its claims with links. When you repeat a fact
-from it, keep the link on that fact, so the user can check it. Don't drop the
-sources, and don't add links the reasoning didn't give. When the reasoning
-gives no link for a fact, just state it; don't add a note saying so.
+Mantic's reasoning cites its claims. `get_forecast` and the other forecast
+reads cite by ref, such as {s48210377}, and list each ref's `url` and name
+under `sources`; elsewhere the reasoning carries the links itself. When you
+repeat a fact, keep its link on that fact, so the user can check it. Don't
+drop the sources, and don't add links the reasoning didn't give. When the
+reasoning gives no link for a fact, just state it; don't add a note saying so.
 
 ## Say what you actually read
 
@@ -263,12 +265,12 @@ question as if it were theirs.
 |---|---|
 | Find questions on a topic | `search_questions` |
 | The current forecast for one question, with a chart | `view_question` |
-| Why Mantic forecasts what it does | `get_forecast`, whose `reasoning` field holds the written report |
-| Why the latest forecast changed | `view_question`, whose `changes_from_previous` explains it when one is stored |
-| How a forecast was built: its paths, their likelihoods and drivers | `get_forecast_structure`, only when the user asks to dig into it and `view_question` reports `structure_available` as true |
-| How a forecast has moved over time | `get_question_forecasts` |
-| What would change the forecast | `view_scenarios`, unless `view_question` reports `has_scenarios` as false, then `get_scenario_cdfs` for exact probabilities |
-| The probability above or below a threshold | `get_forecast_cdf` with `ticks` |
+| Why Mantic forecasts what it does | `get_forecast`, whose `reasoning` holds the written report |
+| Why the latest forecast changed | `view_question`, whose `changes_from_previous` explains it when one is stored, or `explain_forecast_change` |
+| How a forecast was built: its branches, their likelihoods and drivers | `get_forecast_structure`, only when the user asks to dig into it and `view_question` reports `structure_available` as true |
+| How a forecast has moved over time | `get_forecast_history`, or `get_question_forecasts` to page through every forecast |
+| What would change the forecast | `view_scenarios` for the chart and `get_forecast_scenarios` for each side's figures and Mantic's account, unless `view_question` reports `has_scenarios` as false, then `get_scenario_cdfs` for exact probabilities |
+| The probability above or below a threshold, or by a date | `inspect_forecast`, or `get_forecast_cdf` with `ticks` |
 | What is on one of their dashboards | `list_dashboards`, then `search_dashboard_questions` |
 
 For explaining a single forecast in depth, follow the `forecast-explainer`
@@ -291,8 +293,9 @@ organisation defaults to hiding values; it does not by itself establish an
 access restriction.
 
 If the user needs the values, call `view_question` for the question,
-`get_forecast` for a specific forecast ID, or repeat a tool that accepts
-`show_forecasts` with `show_forecasts: true`. These reads use Mantic credits.
+`get_forecast` with a specific forecast ID as `run_id`, or repeat a tool that
+accepts `show_forecasts` with `show_forecasts: true`. These reads use Mantic
+credits.
 If values are still unavailable, report what the tool actually returned;
 suggest contacting Mantic about access only if the response indicates an
 access problem. Do not guess missing values.

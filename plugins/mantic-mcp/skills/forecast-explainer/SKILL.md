@@ -39,9 +39,9 @@ Say "by" and the horizon date, not "eventually".
 
 ## 3. Read the reasoning
 
-Call `get_forecast` with the latest forecast's ID. Its `reasoning` field is
-Mantic's written report: historical context, headwinds, tailwinds, key figures,
-uncertainties and a conclusion.
+Call `get_forecast` with the question ID. Its `reasoning` is Mantic's written
+report: historical context, headwinds, tailwinds, key figures, uncertainties
+and a conclusion.
 
 Summarise the reasoning. Don't paste it. Pull out:
 
@@ -59,26 +59,27 @@ so rather than filling the gap yourself.
 ### When the forecast recorded its structure
 
 Don't fetch the structure for a first explanation. Call
-`get_forecast_structure` with the latest forecast's ID only when the user asks
-to dig deeper (how the forecast was built, which scenarios it weighs, how
-likely each is, or what drives it) and `view_question` reported
-`structure_available` as true. It lists the paths the forecast takes to its
-result, how likely each is, where each lands, why each is in the forecast, and
-the inputs that drive the spread. Answer with the two or three largest paths,
-their shares and where each lands, and the input that drives the most spread.
+`get_forecast_structure` with the question ID only when the user asks to dig
+deeper (how the forecast was built, which branches it weighs, how likely each
+is, or what drives it) and `view_question` reported `structure_available` as
+true. For each sample it gives a `caption` walking through the tree, then
+`layers` of `branches` with each one's `chance`, where it lands and why it is
+in the forecast, and the `inputs` that drive the spread. Read the `caption`
+first. Answer with the two or three largest branches, their chances and where
+each lands, and the input that drives the most spread.
 
-- A path's `share` is of all of its sample's simulations, not of the path
-  above it. A nested path also gives `share_of_parent`.
+- A branch's `chance` is of its whole sample, not of the branch above it. A
+  nested branch also gives `chance_within_parent`.
 - The forecast pools its samples by `weight`. If the samples disagree, say
   so rather than averaging them yourself.
 - Quote figures only as the structure states them. Never compute a new
   probability or value from it.
-- Leave out the `[n]` source markers in the structure's prose.
-- If `omitted` lists anything, say the account is abridged.
+- If `omitted` lists anything, `read_the_rest` names the call that reads a sample whole: make it
+  when the answer depends on what was left out.
 
 If the user asks to dig deeper and `structure_available` is false, the
 forecast recorded no structure, so explain it from the `reasoning` alone and
-present no scenarios, scenario chances or drivers as Mantic's.
+present no branches, branch chances or drivers as Mantic's.
 
 ## 4. Show how it has moved
 
@@ -98,14 +99,16 @@ the probability, or the median for numerical and date questions. The history
 doesn't include each forecast's CDF, so when an older date forecast has no
 median, say its median was beyond its range.
 
-Then say why, from Mantic's own explanation. A forecast can carry
-`changes_from_previous`, Mantic's stored account of what changed since the
-forecast before it: `view_question` returns it for the latest forecast, and
-`get_forecast` for any other. Use it when it is there. Otherwise, for the biggest
-change, call `get_forecast` on the forecast just before it and the one just
+Then say why, from Mantic's own explanation. A forecast can carry Mantic's
+stored account of what changed since the forecast before it: `view_question`
+returns it as `changes_from_previous` for the latest forecast, and
+`explain_forecast_change` with a forecast's ID as `run_id` returns it as
+`change_since_previous` for any other, or a `note` saying why there is none.
+Use it when it is there. Otherwise, for the biggest change, call
+`get_forecast` with the forecast just before it as `run_id`, then the one just
 after, and compare their reasoning: what does the later one cite that the
-earlier one didn't, or weigh differently? A missing `changes_from_previous`
-means none is stored, not that nothing changed. Attribute the explanation to
+earlier one didn't, or weigh differently? A missing account means none is
+stored, not that nothing changed. Attribute the explanation to
 Mantic, keep its source links, and if neither explains the change, say so
 rather than guessing. Keep this to two or three sentences, unless the user asked
 about the history specifically, in which case cover each notable change.
@@ -119,8 +122,9 @@ or you know of one, check the dates first:
   Mantic hasn't re-forecast the question yet. Say so plainly: the forecast
   doesn't reflect the event, and it isn't evidence that the event doesn't
   matter. Don't mention refreshing the forecast.
-- **Forecasts since the event, little movement.** Call `get_forecast` on the
-  first forecast after the event and look for the event in its reasoning. If
+- **Forecasts since the event, little movement.** Call `get_forecast` with the
+  first forecast after the event as `run_id` and look for the event in its
+  reasoning. If
   it's there, explain why Mantic judged it didn't shift the outcome much, for
   example because it was already expected, or because it doesn't bear on
   what resolves the question. If the reasoning doesn't mention the event, say
@@ -134,7 +138,7 @@ under your view, in italics.
 Unless `view_question` reports `has_scenarios` as false, call
 `view_scenarios`. Each scenario is a related event, together with where
 Mantic's forecast lands if that event happens and if it doesn't. Report the
-one or two scenarios whose branches sit furthest apart. These are the
+one or two scenarios whose two sides sit furthest apart. These are the
 developments that would move the forecast most.
 
 If the user asks about a specific threshold under a scenario, call
@@ -209,7 +213,7 @@ Keep it short enough to read in a minute:
 2. **Why.** At most three bullets from the reasoning, keeping its source
    links on the facts you use. A base rate or historical comparison goes in
    one of the three, not after them. When the forecast recorded its
-   structure, lead with its largest paths and their shares instead.
+   structure, lead with its largest branches and their shares instead.
 3. **Main uncertainty.** One sentence on the uncertainty Mantic lists first,
    plus at most one line listing any others. Where it turns on what counts
    for resolution, say what the `clarifications` require.
@@ -217,7 +221,7 @@ Keep it short enough to read in a minute:
    sentences, or more if the user asked about the history. If it hasn't moved
    despite big news, say whether that's because there's been no forecast
    since, or what Mantic's reasoning says about the event.
-5. **What would change it.** The top scenarios, with both branches. Leave
+5. **What would change it.** The top scenarios, with both sides. Leave
    this section out when the question has no scenarios.
 6. **Related Mantic forecasts, if any.** The questions from step 6, each by
    short linked title with its own forecast and date, and a few words on how
