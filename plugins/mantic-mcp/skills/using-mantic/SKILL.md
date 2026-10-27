@@ -1,6 +1,6 @@
 ---
 name: using-mantic
-description: How to find and present Mantic forecasts faithfully. Use whenever you call a Mantic MCP tool (search_questions, view_question, get_forecast, list_forecasts, search_dashboard_questions, view_scenarios, or any other) or report, compare, or summarise a Mantic forecast for the user, including quick, brief or "just the number" requests.
+description: How to find and present Mantic forecasts faithfully. Use whenever you call a Mantic MCP tool (search, search_questions, view_question, get_forecast, list_forecasts, search_dashboard_questions, view_scenarios, or any other) or report, compare, or summarise a Mantic forecast for the user, including quick, brief or "just the number" requests.
 ---
 
 # Using Mantic
@@ -26,13 +26,17 @@ the value with its estimative word, and the date the forecast was made:
 Never drop the date, the link or the separation of Mantic's view from yours to
 save words, and never answer from memory instead of the tools.
 
+When several forecasts ask the same thing, give one: the most recently
+updated or, when they are about as recent, the one with more forecasts.
+Don't list, count or summarise the others unless the user asks for them.
+
 ## Say "forecast", not "question"
 
 Mantic presents what it tracks as forecasts, not questions. In everything you
 write for the user, call them forecasts: "12 forecasts on this dashboard",
 "related forecasts", "I can set up a new forecast for that". Don't say
 "question" or "questions" for them. The tools and API fields still use
-"question" (`search_questions`, `question_id`), but that's internal; don't
+"question" (`question_id`, `view_question`), but that's internal; don't
 carry it into your answer. When you need to tell one forecast run from
 another, say "latest forecast" and "previous forecast".
 
@@ -47,9 +51,9 @@ for example whether it's asking if something happens or when.
 A forecast is only meaningful alongside when it was made. For every forecast
 you mention, give:
 
-- the value as the question page states it: the `headline` that
-  `view_question` gives when you have it, otherwise the figures the table
-  below uses
+- the value as the question page states it: the published forecast's
+  `statement` that `view_question` and `get_forecast` give, or the figure a
+  `search` result's line states, otherwise the figures the table below uses
 - the date it was made, from the forecast's `date` field
 - the question's public page, `https://app.mantic.com/question/{id}`, as a
   clickable link
@@ -115,9 +119,10 @@ topic, use theirs.
   needs no column of its own. Write it from the question's
   `declarative_title`, the statement form such as "UK inflation will be below
   3% in December 2026.", which reads naturally next to a probability. It is
-  in the tool's structured results rather than its text summary. Work from
-  `title` instead when `declarative_title` is null or doesn't read as a
-  statement, which is common for numerical and date questions, for example
+  in the tool's structured results rather than its text, so work from
+  `title` when you see only the text, or when `declarative_title` is null or
+  doesn't read as a statement, which is common for numerical and date
+  questions, for example
   "What the IIF reports for April 2026" or "The STOXX Europe 600 index closes
   at on June 30, 2026". Shorten by dropping filler such as "will be" or
   "according to", but keep the entity, any threshold or value, and the
@@ -130,11 +135,11 @@ topic, use theirs.
     31 Dec 2026"
   - numerical: the median, with units, written as "median 2.8%". The
     question page leads with the most likely value and its 80% range
-    instead, which `view_question`'s headline gives
+    instead, which `view_question`'s `statement` gives
   - date: the median date, to the day. The question page gives the median
     only when it falls within the forecast's default range; otherwise it gives
     the chance by the end of that range, such as "20% by 1 Mar 2027", and the
-    chance it never happens. Use `view_question`'s headline for that
+    chance it never happens. Use `view_question`'s `statement` for that
   - categorical: the leading option and its probability
 - **25th–75th percentile** is the range between those two percentiles for
   numerical and date questions. Use "—" for other types.
@@ -157,7 +162,8 @@ topic, use theirs.
 
 Use each question's `latest_forecast` in the search results to fill the table,
 fetching the CDF only when needed for a missing percentile's horizon as above.
-Don't routinely open every question. For
+Don't routinely open every question. `search` returns 6 questions unless you
+raise `limit` (at most 25), so raise it for a broad topic. For `search` and
 `search_dashboard_questions`, pass `show_forecasts: true` so the values come
 back. If a row's forecast is redacted, write "hidden" in its cells and follow
 "When a forecast is redacted" below. Mark a question with no forecast yet as
@@ -173,10 +179,10 @@ one line offering at most two or three follow-ups. Pick the ones that fit:
 - explain a row in depth (the `forecast-explainer` skill)
 - the next page, when there is a `next` cursor
 - only the open forecasts, when some rows have resolved
-- the probability at the user's own threshold or date (`get_forecast_cdf`)
-- how a forecast has moved (`get_question_forecasts`)
-- adding questions to one of their dashboards, after a `search_questions`
-  search
+- the probability at the user's own threshold or date (`inspect_forecast`)
+- how a forecast has moved (`get_forecast_history`), or which of them moved
+  most since a date (`compare_forecast_changes`)
+- adding questions to one of their dashboards, after a `search`
 - setting up a new forecast, when coverage is thin (the `forecast-drafting` skill)
 - grouping the table by topic, or sorting it, for example by probability
 
@@ -256,22 +262,26 @@ If the user's question differs from Mantic's, for example a different date,
 threshold or definition in the title or `clarifications`, say so plainly
 before answering. Then answer what
 Mantic can: for a different date or value on the same question, give the
-probability there with `get_forecast_cdf`. Don't quietly answer Mantic's
+probability there with `inspect_forecast`. Don't quietly answer Mantic's
 question as if it were theirs.
 
 ## Pick the tool for the job
 
 | User wants | Tool |
 |---|---|
-| Find questions on a topic | `search_questions` |
+| Find questions on a topic | `search`, which also finds dashboards on it |
 | The current forecast for one question, with a chart | `view_question` |
-| Why Mantic forecasts what it does | `get_forecast`, whose `reasoning` holds the written report |
+| Many forecasts drawn at once, such as a whole dashboard or a batch just created | `view_questions` with their `question_ids` or a `dashboard_id` |
+| Why Mantic forecasts what it does | `view_question`, which includes Mantic's reasoning |
+| What an earlier forecast said, or the forecast on a past day | `get_forecast` with a forecast ID as `run_id`, or a day as `as_of` |
 | Why the latest forecast changed | `view_question`, whose `changes_from_previous` explains it when one is stored, or `explain_forecast_change` |
-| How a forecast was built: its branches, their likelihoods and drivers | `get_forecast_structure`, only when the user asks to dig into it and `view_question` reports `structure_available` as true |
+| How a forecast was built: its branches, their likelihoods and drivers | `get_forecast_structure`, only when the user asks to dig into it and `view_question`'s `structure` note says the forecast recorded its structure |
 | How a forecast has moved over time | `get_forecast_history`, or `get_question_forecasts` to page through every forecast |
-| What would change the forecast | `view_scenarios` for the chart and `get_forecast_scenarios` for each side's figures and Mantic's account, unless `view_question` reports `has_scenarios` as false, then `get_scenario_cdfs` for exact probabilities |
-| The probability above or below a threshold, or by a date | `inspect_forecast`, or `get_forecast_cdf` with `ticks` |
-| What is on one of their dashboards | `list_dashboards`, then `search_dashboard_questions` |
+| Which of several forecasts moved, and how, since a date | `compare_forecast_changes` |
+| What would change the forecast | `get_forecast_scenarios` for each side's figures and Mantic's account, and `view_scenarios` for the chart, only when `view_question` has a `scenarios` note saying the question has scenarios |
+| The probability above or below a threshold, or by a date | `inspect_forecast`; on each side of a scenario, `get_scenario_cdfs` with `ticks` |
+| What is on one of their dashboards | `list_dashboards` or `search` with `entity` "dashboards", then `search` with its `dashboard_id`, or `search_dashboard_questions` to page through all of it |
+| A new forecast | the `forecast-drafting` skill |
 
 For explaining a single forecast in depth, follow the `forecast-explainer`
 skill.
@@ -279,11 +289,15 @@ skill.
 ## Don't fetch forecasts you won't use
 
 Viewing forecasts through the MCP uses the user's Mantic credits. For tools
-that accept `show_forecasts`, such as `search_dashboard_questions`, set it to
+that accept `show_forecasts`, such as `search` and `search_dashboard_questions`, set it to
 `false` when you only need titles and IDs, and `true` when you need forecast
 values. Omitting it uses the organisation's visibility default.
-`search_questions` has no `show_forecasts` parameter. Open the questions that
-matter rather than every search result.
+`get_forecast_history`, `explain_forecast_change` and
+`compare_forecast_changes` read nothing at all where that default hides
+values, so pass `true` whenever you call them. `search_questions`, the earlier name for
+`search`, has no `show_forecasts` parameter and uses that default. Open the
+questions that matter rather than every search result, and don't call
+`get_forecast` for a forecast `view_question` has just shown.
 
 ## When a forecast is redacted
 

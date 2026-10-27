@@ -1,8 +1,9 @@
 # Mantic MCP plugin
 
 [Mantic](https://mantic.com) is an AI forecasting system. This plugin bundles
-the Mantic MCP server (`https://api.mantic.com/mcp`) to search questions, view
-forecasts and render CDF charts, plus three skills:
+the Mantic MCP server (`https://api.mantic.com/mcp`) to search questions and
+dashboards, read and explain forecasts, draw them as the question page does,
+and draft and create questions, plus three skills:
 
 - `using-mantic` presents forecasts with their date and link, keeping Mantic's
   view separate from the agent's own.

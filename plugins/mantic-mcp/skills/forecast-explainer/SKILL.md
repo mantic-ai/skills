@@ -12,25 +12,28 @@ and keep Mantic's view separate from yours.
 ## 1. Find the question
 
 If the user gave a question ID or a `app.mantic.com/question/{id}` link, use
-that. Otherwise call `search_questions` with their topic. If several questions
+that. Otherwise call `search` with their topic. If several questions
 fit, list the closest two or three with links and ask which one they mean.
 Don't pick one silently.
 
 ## 2. Get the current forecast
 
-Call `view_question`. Note the forecast value, its `date`, the exact wording
-of the question and its `clarifications` (the resolution criteria), including
-any threshold or deadline they state. The rest of the explanation depends on
+Call `view_question`. It gives the question, the latest published forecast
+and Mantic's reasoning. Note
+the forecast's `statement`, when it was made, the exact wording of the
+question and its `clarifications` (the resolution criteria), including any
+threshold or deadline they state. The rest of the explanation depends on
 exactly what is being forecast.
 
 Only treat a date as the question's deadline when the title or
 `clarifications` state it. Ignore any deadline field in the chart data that
 the question's text doesn't mention.
 
-For numerical and date questions, `view_question` also returns the forecast's
-CDF: the probability that the outcome lands at or below each value or date.
-Take every probability you state from those CDF values. For a date or value
-the CDF doesn't list, call `get_forecast_cdf` with it in `ticks`. Never
+`view_question` states the forecast as its page does: for numerical and date
+questions its percentiles, ranges and chances by date. Take every probability
+you state from those figures. For a date or value they don't list, call
+`inspect_forecast`: one call per kind of figure (chances by date, chances
+between values, or percentiles), asking for every figure of that kind. Never
 estimate a probability from the chart or state one no tool returned.
 
 A date forecast's CDF stops at its horizon, the last date it lists. The
@@ -39,9 +42,10 @@ Say "by" and the horizon date, not "eventually".
 
 ## 3. Read the reasoning
 
-Call `get_forecast` with the question ID. Its `reasoning` is Mantic's written
-report: historical context, headwinds, tailwinds, key figures, uncertainties
-and a conclusion.
+The reasoning in `view_question`'s text is Mantic's written report:
+historical context, headwinds, tailwinds, key figures, uncertainties and a
+conclusion. Call `get_forecast` only for an earlier forecast (`run_id`) or a
+past day (`as_of`).
 
 Summarise the reasoning. Don't paste it. Pull out:
 
@@ -61,8 +65,8 @@ so rather than filling the gap yourself.
 Don't fetch the structure for a first explanation. Call
 `get_forecast_structure` with the question ID only when the user asks to dig
 deeper (how the forecast was built, which branches it weighs, how likely each
-is, or what drives it) and `view_question` reported `structure_available` as
-true. For each sample it gives a `caption` walking through the tree, then
+is, or what drives it) and `view_question`'s `structure` note says the
+forecast recorded its structure. For each sample it gives a `caption` walking through the tree, then
 `layers` of `branches` with each one's `chance`, where it lands and why it is
 in the forecast, and the `inputs` that drive the spread. Read the `caption`
 first. Answer with the two or three largest branches, their chances and where
@@ -77,35 +81,36 @@ each lands, and the input that drives the most spread.
 - If `omitted` lists anything, `read_the_rest` names the call that reads a sample whole: make it
   when the answer depends on what was left out.
 
-If the user asks to dig deeper and `structure_available` is false, the
-forecast recorded no structure, so explain it from the `reasoning` alone and
-present no branches, branch chances or drivers as Mantic's.
+If the user asks to dig deeper and the note says the forecast recorded no
+structure, explain it from the `reasoning` alone and present no branches,
+branch chances or drivers as Mantic's.
 
 ## 4. Show how it has moved
 
-Call `get_question_forecasts` for the question with `show_forecasts: true`.
-Retrieving these values uses the user's Mantic credits; omitting the flag can
-return redacted values when the organisation defaults to hiding forecasts.
+Call `get_forecast_history` for the question with `show_forecasts: true`.
+Retrieving these values uses the user's Mantic credits; without the flag, an
+organisation that hides forecasts by default gets nothing back. It lists the
+newest forecasts (10 unless you raise `limit`, at most 25), each with its
+figure as the question page states it and `what_changed` in one line, and,
+where Mantic has split the history into regimes, the spells in which the
+forecast held at one level. Call them regimes, never phases or periods.
 
 If there is only one forecast, say it is Mantic's first and move on.
 
-The history comes in pages of 25, newest first. To say where the forecast
-started, follow the `next` cursor until it runs out; otherwise say how far
-back you looked.
-
 When there are more, say which way it is trending: where it started, where it
-is now, and any sharp change, with dates. Use the headline figure throughout, such as
-the probability, or the median for numerical and date questions. The history
-doesn't include each forecast's CDF, so when an older date forecast has no
-median, say its median was beyond its range.
+is now, and any sharp change, with dates. Use each forecast's figure as the
+history states it. The oldest regime says where the forecast started, unless
+the history reports `regimes_shown`, which means older regimes were left out;
+then, or without regimes, say how far back you looked.
 
-Then say why, from Mantic's own explanation. A forecast can carry Mantic's
-stored account of what changed since the forecast before it: `view_question`
-returns it as `changes_from_previous` for the latest forecast, and
-`explain_forecast_change` with a forecast's ID as `run_id` returns it as
-`change_since_previous` for any other, or a `note` saying why there is none.
-Use it when it is there. Otherwise, for the biggest change, call
-`get_forecast` with the forecast just before it as `run_id`, then the one just
+Then say why, from Mantic's own explanation: each forecast's `what_changed`,
+the regimes' headlines, and `view_question`'s `changes_from_previous` for the
+latest forecast. For the biggest change, call `explain_forecast_change` with
+that forecast's `forecast_id` as `run_id`, or a regime's `first_forecast_id`
+for the step into it. It returns Mantic's account of what changed since the
+forecast before, or a `note` saying why there is none. When none of these
+explains it, call `get_forecast` with the forecast just before it as `run_id`,
+then the one just
 after, and compare their reasoning: what does the later one cite that the
 earlier one didn't, or weigh differently? A missing account means none is
 stored, not that nothing changed. Attribute the explanation to
@@ -131,19 +136,23 @@ or you know of one, check the dates first:
   that, rather than inventing Mantic's view of it.
 
 Describing the event itself, if it came from you rather than Mantic, belongs
-under your view, in italics.
+under your view, in italics. So does any judgement of how the event bears on
+the forecast or its resolution that Mantic's reasoning doesn't make, even when
+the user told you about the event.
 
 ## 5. Show what would change it
 
-Unless `view_question` reports `has_scenarios` as false, call
-`view_scenarios`. Each scenario is a related event, together with where
-Mantic's forecast lands if that event happens and if it doesn't. Report the
-one or two scenarios whose two sides sit furthest apart. These are the
-developments that would move the forecast most.
+When `view_question` has a `scenarios` note saying the question has
+scenarios, call `get_forecast_scenarios`, and `view_scenarios` to draw them. Each scenario is
+a related event, its chance, and where Mantic's forecast lands if that event
+happens and if it doesn't, with Mantic's `why` for each side. Report the one
+or two scenarios that move the forecast most, saying which figure moves:
+`default` is the forecast's own figure of the same kind, which may not be its
+headline.
 
 If the user asks about a specific threshold under a scenario, call
-`get_scenario_cdfs` with `ticks`. If `has_scenarios` is false, skip this step
-without calling `view_scenarios`. If the question has no scenarios, leave the
+`get_scenario_cdfs` with `ticks`. Without a `scenarios` note, skip this step
+without calling either tool. If the question has no scenarios, leave the
 section out of the explanation; don't mention that there are none.
 
 State that scenario outcomes are Mantic's conditional estimates, not events
@@ -151,7 +160,7 @@ that have happened.
 
 ## 6. Find related questions
 
-Call `search_questions` with the question's topic, in a few words rather than
+Call `search` with the question's topic, in a few words rather than
 its full title. From the results, pick up to three other questions that bear
 directly on this one: a narrower or broader version, an upstream event, or
 the same event on a different timeline. Skip loosely related ones. If none
@@ -193,14 +202,15 @@ Keep it short enough to read in a minute:
      - categorical: **Leading options**, the top two or three with their
        probabilities
    - The comparison table's **Previous** row is the forecast made just
-     before the latest one, from `get_question_forecasts`. Its columns are
-     the date each forecast was made plus the same headline figures as the
-     summary list. The **Change** row says how each figure moved in plain
+     before the latest one, as `get_forecast_history` lists it. Its columns
+     are the date each forecast was made plus the same headline figures as
+     the summary list. The **Change** row says how each figure moved in plain
      words, such as "up 4 points", "median 5 days earlier" or "unchanged".
-     For a probability by a date on a date question, call `get_forecast_cdf`
-     on the previous forecast with the same date in `ticks`, so the two rows
-     compare like with like. If the latest forecast is Mantic's first, skip
-     the table and say so in one line.
+     For a figure the history doesn't state, such as a percentile or a
+     probability by the same date, call `inspect_forecast` with the previous
+     forecast's `forecast_id` as `run_id`, one call per kind of figure, so
+     the two rows compare like with like. If the latest forecast is
+     Mantic's first, skip the table and say so in one line.
    - For a missing percentile on a date question, write "after" plus the
      forecast's horizon, the last date in its CDF, as in the example above.
      If the CDF is unavailable, follow `using-mantic` to fetch it or report

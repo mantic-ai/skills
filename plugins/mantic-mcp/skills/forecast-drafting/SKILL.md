@@ -36,7 +36,7 @@ split before drafting.
 
 ## 2. Check what Mantic already forecasts
 
-Call `search_questions` with the topic in a few words, and read the
+Call `search` with the outcome in the user's own words, and read the
 `clarifications` of the closest matches.
 
 - **One already answers it:** show it, following `using-mantic`, and offer to
@@ -125,11 +125,11 @@ form: title, type, the answer options or range, supplementary information and
 clarifications. List any changes you made to their wording, with a sentence
 on why for each.
 
-Ask for a clear yes before calling `create_question_from_draft`. Once created,
-a forecast can't be edited through these tools, each draft creates only one
-forecast, and creating it uses the user's quota and credits. Revise first with
-`replace_question_draft` if they want changes; it replaces the whole draft, so
-send every field again.
+Ask for a clear yes before calling `create_question_from_draft` with the
+draft's ID in `question_draft_ids`. Once created, a forecast can't be edited
+through these tools, each draft creates only one forecast, and creating it
+uses the user's quota and credits. Revise first with `replace_question_draft`
+if they want changes; it replaces the whole draft, so send every field again.
 
 After creating it, tell the user:
 
@@ -141,9 +141,18 @@ After creating it, tell the user:
 
 ## Sets of forecasts
 
-For several related forecasts, confirm the list with the user before drafting
-any. Draft at most five at a time, each through steps 3 to 5. Keep their
-wording, sources and clarifications consistent, and vary only what should
-vary, such as the date or threshold. Show them together and create them only
-after a yes for the set. If a creation fails, stop and tell the user which
-forecasts were created and which weren't.
+For several related forecasts, search for each first (step 2) and offer any
+forecast Mantic already has, then confirm with the user which still need
+drafting. `draft_questions` drafts several at once from the user's words, in
+Mantic's own style, up to the limit its description gives; check each against
+`checklist.md` and fix it with `replace_question_draft`, or write each
+yourself through steps 3 to 5. Keep their wording, sources and clarifications
+consistent, and vary only what should vary, such as the date or threshold.
+Show them together in a short table of titles and types, and create them only
+after a yes for the set. `create_question_from_draft` takes a limited number
+per call, given in its description: for a larger set, offer to create that
+many now and the rest in a second call. A call creates all of its drafts or
+none: if it refuses, nothing was created, so fix what it names or leave those
+drafts out, and call again. Once their first forecasts are ready, show the set
+with one `view_questions` call on their IDs rather than `view_question` for
+each.
