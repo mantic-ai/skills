@@ -3,12 +3,15 @@
 [Mantic](https://mantic.com) is an AI forecasting system. This plugin bundles
 the Mantic MCP server (`https://api.mantic.com/mcp`) to search questions and
 dashboards, read and explain forecasts, draw them as the question page does,
-and draft and create questions, plus three skills:
+request forecasts with the user's own context, and draft and create questions,
+plus four skills:
 
 - `using-mantic` presents forecasts with their date and link, keeping Mantic's
   view separate from the agent's own.
 - `forecast-explainer` explains what Mantic predicts, why, how the forecast has
   moved, and what would change it.
+- `forecast-with-context` requests a forecast using relevant user-specific
+  information, such as private knowledge or internal plans.
 - `forecast-drafting` turns what a user wants to know into a well-defined
   question, checks it, and creates it on confirmation.
 
@@ -33,6 +36,7 @@ mantic-mcp/
 └── skills/
     ├── using-mantic/SKILL.md      presentation rules for any Mantic tool call
     ├── forecast-explainer/SKILL.md
+    ├── forecast-with-context/SKILL.md
     └── forecast-drafting/
         ├── SKILL.md               drafting workflow
         └── checklist.md           rules by type, failures, worked examples

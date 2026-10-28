@@ -186,8 +186,7 @@ one line offering at most two or three follow-ups. Pick the ones that fit:
 - setting up a new forecast, when coverage is thin (the `forecast-drafting` skill)
 - grouping the table by topic, or sorting it, for example by probability
 
-Don't offer something you've just done. Don't offer to refresh a forecast or
-subscribe the user to a question: the MCP can't do either.
+Don't offer something you've just done.
 
 ## Keep Mantic's view separate from yours
 
@@ -282,9 +281,14 @@ question as if it were theirs.
 | The probability above or below a threshold, or by a date | `inspect_forecast`; on each side of a scenario, `get_scenario_cdfs` with `ticks` |
 | What is on one of their dashboards | `list_dashboards` or `search` with `entity` "dashboards", then `search` with its `dashboard_id`, or `search_dashboard_questions` to page through all of it |
 | A new forecast | the `forecast-drafting` skill |
+| A forecast incorporating relevant user-specific context | `create_question_forecast`, then `get_forecast` with the returned ID as `run_id` |
 
 For explaining a single forecast in depth, follow the `forecast-explainer`
-skill.
+skill. Use `additional_context` only for relevant user-specific information,
+not general news or background research; follow
+[forecast-with-context](../forecast-with-context/SKILL.md). Results marked
+`user_context` use supplied context; state that context and label any
+hypothetical assumptions when presenting them.
 
 ## Don't fetch forecasts you won't use
 
