@@ -40,7 +40,7 @@ Call `search` with the outcome in the user's own words, and read the
 `clarifications` of the closest matches.
 
 - **One already answers it:** show it, following `using-mantic`, and offer to
-  add it to a dashboard with `add_question_to_dashboard`. Draft a new one only
+  add it to a dashboard with `add_to_dashboard`. Draft a new one only
   if the user still wants their own version.
 - **Close but different:** show the closest one to three in a short table,
   say in a sentence how each differs from what the user asked, then draft.
@@ -128,8 +128,10 @@ on why for each.
 Ask for a clear yes before calling `create_question_from_draft` with the
 draft's ID in `question_draft_ids`. Once created, a forecast can't be edited
 through these tools, each draft creates only one forecast, and creating it
-uses the user's quota and credits. Revise first with `replace_question_draft`
+uses the user's question quota and their credits for its first forecast run;
+how many credits depends on their plan, so don't quote a figure. Revise first with `replace_question_draft`
 if they want changes; it replaces the whole draft, so send every field again.
+Delete a draft they no longer want with `delete_question_draft`.
 
 After creating it, tell the user:
 
