@@ -183,6 +183,8 @@ one line offering at most two or three follow-ups. Pick the ones that fit:
 - how a forecast has moved (`get_forecast_history`), or which of them moved
   most since a date (`compare_forecast_changes`)
 - adding questions to one of their dashboards, after a `search`
+- keeping these on a dashboard, when the user says they will keep following
+  the topic (the `dashboards` skill)
 - refreshing a forecast that is weeks old or predates news on its topic
   (`refresh_forecast`), or turning on alerts for it (`turn_on_alerts`)
 - setting up a new forecast, when coverage is thin (the `forecast-drafting` skill)
@@ -302,6 +304,7 @@ question as if it were theirs.
 | The probability above or below a threshold, or by a date | `inspect_forecast`; on each side of a scenario, `get_scenario_cdfs` with `ticks` |
 | What is on one of their dashboards | `list_dashboards` or `search` with `entity` "dashboards", then `search` with its `dashboard_id`, or `search_dashboard_questions` to page through all of it |
 | Add, remove or rename on a dashboard | `add_to_dashboard`, `remove_from_dashboard`, `rename_dashboard`, after the user's yes |
+| Keep following a topic, or what changed on a dashboard | the `dashboards` skill |
 | A fresh forecast of an existing question | `refresh_forecast`, after the user's yes |
 | Notifications when a forecast moves | `turn_on_alerts`, `change_alerts`, `turn_off_alerts`, `get_alerts` |
 | A new forecast | the `forecast-drafting` skill |

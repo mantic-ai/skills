@@ -4,7 +4,7 @@
 the Mantic MCP server (`https://api.mantic.com/mcp`) to search questions and
 dashboards, read and explain forecasts, draw them as the question page does,
 request forecasts with the user's own context, and draft and create questions,
-plus four skills:
+plus five skills:
 
 - `using-mantic` presents forecasts with their date and link, keeping Mantic's
   view separate from the agent's own.
@@ -14,6 +14,8 @@ plus four skills:
   information, such as private knowledge or internal plans.
 - `forecast-drafting` turns what a user wants to know into a well-defined
   question, checks it, and creates it on confirmation.
+- `dashboards` keeps a dashboard as lasting context on a topic: when to offer
+  one, building it, catching up on what changed, and keeping its log.
 
 ## Install
 
@@ -37,7 +39,8 @@ mantic-mcp/
     ├── using-mantic/SKILL.md      presentation rules for any Mantic tool call
     ├── forecast-explainer/SKILL.md
     ├── forecast-with-context/SKILL.md
-    └── forecast-drafting/
-        ├── SKILL.md               drafting workflow
-        └── checklist.md           rules by type, failures, worked examples
+    ├── forecast-drafting/
+    │   ├── SKILL.md               drafting workflow
+    │   └── checklist.md           rules by type, failures, worked examples
+    └── dashboards/SKILL.md
 ```
