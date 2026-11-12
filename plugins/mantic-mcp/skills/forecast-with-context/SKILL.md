@@ -26,6 +26,9 @@ The result is visible to the user and their organisation.
 The returned `id` identifies the requested run; pass it to `get_forecast` as
 `run_id`. Until the run completes, `get_forecast` reports it as not found;
 retain the ID rather than submitting again.
+Use `get_forecast_runs` or `wait_for_forecasts` with that exact ID in
+`run_ids` to follow progress automatically. Do not ask the user to request
+polling. Forecasts already launched cannot be stopped through MCP.
 Explain what Mantic made of the user's context from `changes_from_previous`
 or `reasoning`; do not assume it accepted the context or changed its forecast.
 Follow [using-mantic](../using-mantic/SKILL.md) when presenting the result.

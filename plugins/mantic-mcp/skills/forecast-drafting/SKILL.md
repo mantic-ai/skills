@@ -31,8 +31,9 @@ message. Include the type suggestion from step 3 among them when it applies.
 Don't interrogate a user who has already been specific.
 
 If the request is broad, such as "will AI take jobs?", propose splitting it
-into one to five specific forecasts that together answer it, and confirm the
-split before drafting.
+into one to five specific forecasts that together answer it, and draft them
+for a single review. Ask only when an unresolved choice changes what the
+user would be forecasting.
 
 ## 2. Check what Mantic already forecasts
 
@@ -120,6 +121,13 @@ private person's personal life or anyone's death, and sexual content.
 
 ## 6. Show the draft and create it only on a yes
 
+One draft, or a replacement, is created with `create_question_from_draft`.
+Two or more drafts, or any with a dashboard or scenarios, go in one
+`prepare_actions` review: ask once, then make it with one `execute_actions`
+call. Where those tools aren't available, create all the drafts in one
+`create_question_from_draft` call after the same single yes. Never ask again
+for each draft or dashboard addition.
+
 Save it with `create_question_draft`, then show the user the draft in plain
 form: title, type, the answer options or range, supplementary information and
 clarifications. List any changes you made to their wording, with a sentence
@@ -141,6 +149,12 @@ After creating it, tell the user:
   with `view_question`
 - that it's in their own forecasts list, and offer to add it to a dashboard
 
+Show the returned progress widget, which follows the new forecasts
+automatically. In a text-only client use `wait_for_forecasts` with the new
+`question_ids`, then read the exact completed `run_ids` and show the results
+together. Do not ask whether to keep polling. The widget's launch button offers
+Undo for five seconds before submission; launched runs cannot be stopped through MCP.
+
 ## Sets of forecasts
 
 For several related forecasts, search for each first (step 2) and offer any
@@ -151,10 +165,10 @@ Mantic's own style, up to the limit its description gives; check each against
 yourself through steps 3 to 5. Keep their wording, sources and clarifications
 consistent, and vary only what should vary, such as the date or threshold.
 Show them together in a short table of titles and types, and create them only
-after a yes for the set. `create_question_from_draft` takes a limited number
-per call, given in its description: for a larger set, offer to create that
-many now and the rest in a second call. A call creates all of its drafts or
-none: if it refuses, nothing was created, so fix what it names or leave those
-drafts out, and call again. Once their first forecasts are ready, show the set
+after a yes for the set, through one `prepare_actions` review. A review takes
+a limited number of new forecasts, given in its description: for a larger
+set, offer to review that many now and the rest in a second batch. If a
+review is refused, nothing was created, so fix what it names or leave those
+drafts out, and prepare it again. Once their first forecasts are ready, show the set
 with one `view_questions` call on their IDs rather than `view_question` for
 each.

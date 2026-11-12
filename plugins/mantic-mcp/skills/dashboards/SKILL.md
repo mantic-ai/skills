@@ -51,10 +51,19 @@ and suggest splitting a topic that sprawls.
 
 ## Change it only with a yes
 
+For a request spanning several changes, put the dashboard changes, new
+forecasts and scenarios in one `prepare_actions` review and ask once. One yes
+to all or to named rows covers those rows and their prerequisites; call
+`execute_actions` once and never ask again for each forecast added. Where the
+review shows as a card, its Approve button is the yes. A review lasts 30
+minutes and takes up to 20 actions, at most 10 of them new forecasts. A
+changed request needs a fresh review, never the old approval.
+
+For a single change, or where `prepare_actions` isn't available,
 `create_dashboard`, `add_to_dashboard`, `remove_from_dashboard`,
 `rename_dashboard` and `set_dashboard_constitution` first list the change
 with a confirmation code. Show it, and repeat the call with that code only
-after the user's explicit yes. Propose only what they asked for, with a
+after the user's yes. Propose only what they asked for, with a
 reason for each forecast added or removed, and relay any refusal as given.
 
 ## Keep the log
