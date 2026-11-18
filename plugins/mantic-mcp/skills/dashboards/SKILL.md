@@ -49,6 +49,18 @@ and suggest splitting a topic that sprawls.
 - Before drafting new forecasts for it, read `get_dashboard_suggestions`:
   Mantic may already have them.
 
+## Polymarket lists
+
+The Polymarket dashboard has two lists: Mantic top picks, the markets Mantic
+judges most useful to forecast, and Most traded, ranked by trading volume.
+`read_polymarket_lists` reads them: places with Mantic beside the market, and
+when each was last ranked. Lead with the places and the gaps.
+
+To see further down, offer `change_polymarket_subscription` (`subscribe`,
+`lock`, `unlock`, `unsubscribe`). It first lists the change and its cost with
+a confirmation code; repeat the call with that code only after the user's yes.
+For single markets, use `activate_forecasts`.
+
 ## Change it only with a yes
 
 For a request spanning several changes, put the dashboard changes, new
