@@ -126,7 +126,7 @@ They must settle the forecast on their own, without the title or background.
   the 7-day average is at or above 50".
 - Use the date the event happened, as the source of record dates it, not the
   date news coverage appears.
-- No upper bound and no "if it hasn't happened by D, resolves…" clause.
+- Leave the upper bound open, the default. No "if it hasn't happened by D, resolves…" clause.
   Mantic handles the event not happening within its range.
 - For "how long will X last?", ask "When will X end?".
 
@@ -172,7 +172,7 @@ They must settle the forecast on their own, without the title or background.
 - If several options could all happen, such as which countries a leader
   visits, ask which happens first.
 - No time ranges as options. That's a date forecast.
-- Between 2 and about 10 options, with no duplicates.
+- At least 3 options and no more than about 10, with no duplicates.
 
 ### Yes or no
 

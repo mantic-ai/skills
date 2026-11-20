@@ -102,7 +102,7 @@ Run the final checks in `checklist.md`, then this test:
    has no judgment of their own, resolve it from the title and clarifications
    alone?
 2. **Four futures.** Imagine four ways the world could go: the likely case,
-   an edge case, a case where it happens only partly or in an unexpected
+   a plausible edge case, a case where it happens only partly or in an unexpected
    form, and a borderline case that only just meets or misses the criteria.
    For each, decide how the forecast resolves. If any resolves two ways or
    not at all, fix the clarifications. The bar is a competent resolver with
