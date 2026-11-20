@@ -107,8 +107,12 @@ They must settle the forecast on their own, without the title or background.
   what makes each outcome happen.
 - **No instructions to the forecaster** ("include a prediction for each
   date", "only consider…"). Clarifications describe the world, not the task.
-- **No annulment or "resolves ambiguous" clauses.** Give every case a rule
-  instead.
+- **Annulment only where the value may never exist.** When a number or an
+  option exists only if some event happens, say the forecast annuls if it has
+  not happened by a stated date. A routine scheduled release, a count that is
+  truly zero, a "none of these" option, and a yes or no or date forecast
+  whose event does not happen need no such clause. No "resolves ambiguous"
+  clauses.
 - **Keep them tight.** Short paragraphs or bullets. The detail goes here,
   not in the title, but add a rule only when it settles something a reader
   could otherwise get wrong.

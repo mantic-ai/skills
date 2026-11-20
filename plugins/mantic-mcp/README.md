@@ -13,7 +13,8 @@ plus five skills:
 - `forecast-with-context` requests a forecast using relevant user-specific
   information, such as private knowledge or internal plans.
 - `forecast-drafting` turns what a user wants to know into a well-defined
-  question, checks it, and creates it on confirmation.
+  question, checks it, and creates the forecast the user asked for, asking
+  first only over their organisation's approval threshold.
 - `dashboards` keeps a dashboard as lasting context on a topic: when to offer
   one, building it, catching up on what changed, and keeping its log.
 

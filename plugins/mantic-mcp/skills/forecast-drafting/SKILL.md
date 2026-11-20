@@ -119,7 +119,7 @@ improve it and say what you changed. The only requests to turn down are
 events that have already happened or are already known, forecasts about a
 private person's personal life or anyone's death, and sexual content.
 
-## 6. Show the draft and create it only on a yes
+## 6. Create the forecast the user asked for
 
 One draft, or a replacement, is created with `create_question_from_draft`.
 Two or more drafts, or any with a dashboard or scenarios, go in one
@@ -128,21 +128,29 @@ call. Where those tools aren't available, create all the drafts in one
 `create_question_from_draft` call after the same single yes. Never ask again
 for each draft or dashboard addition.
 
-Save it with `create_question_draft`, then show the user the draft in plain
-form: title, type, the answer options or range, supplementary information and
-clarifications. List any changes you made to their wording, with a sentence
-on why for each.
+Save it with `create_question_draft`, then call `create_question_from_draft`
+with the draft's ID in `question_draft_ids`.
 
-Ask for a clear yes before calling `create_question_from_draft` with the
-draft's ID in `question_draft_ids`. Once created, a forecast can't be edited
+A forecast the user asked for: create it without asking. Ask first only if
+the request could mean materially different forecasts, the user wants to
+review the draft, or they are only exploring or don't want to spend credits.
+After creating it, state any assumption you made in one line.
+
+When you do ask, show the draft in plain form: title, type, the answer options
+or range, supplementary information and clarifications. If the reply says
+nothing was created because the cost needs approval, show that cost, and once
+the user approves call again with the same arguments and the reply's code as
+`confirmation`. Once created, a forecast can't be edited
 through these tools, each draft creates only one forecast, and creating it
 uses the user's question quota and their credits for its first forecast run;
-how many credits depends on their plan, so don't quote a figure. Revise first with `replace_question_draft`
+don't quote a figure for the credits unless a reply gives one. Revise first with `replace_question_draft`
 if they want changes; it replaces the whole draft, so send every field again.
 Delete a draft they no longer want with `delete_question_draft`.
 
 After creating it, tell the user:
 
+- what was created: title, type and the answer options or range, with any
+  changes you made to their wording and a sentence on why for each
 - the forecast's link, `https://app.mantic.com/question/{id}`
 - that Mantic has started its first forecast, which usually takes a few
   minutes, and they'll get a notification when it's ready, or you can check

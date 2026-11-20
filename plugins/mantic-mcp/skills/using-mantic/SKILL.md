@@ -198,7 +198,9 @@ Ask for approval once per request, never once per item or step.
 
 - Reads, drafting and checking scenarios change nothing: do them without
   asking.
-- One change: show it, get a yes, then call its own tool.
+- A forecast the user asked for: create it without asking; `forecast-drafting`
+  says when to ask first.
+- Any other single change: show it, get a yes, then call its own tool.
 - Two or more changes (forecasts, dashboard changes, scenarios): put them all
   in one `prepare_actions` review with its quota and credit implications. The
   user approves all or names rows, with the card's Approve button or a reply,
