@@ -42,6 +42,7 @@ mantic-mcp/
     ├── forecast-with-context/SKILL.md
     ├── forecast-drafting/
     │   ├── SKILL.md               drafting workflow
-    │   └── checklist.md           rules by type, failures, worked examples
+    │   ├── constitution.md        question rules, generated from core.constitution
+    │   └── checklist.md           how to apply the rules, failures, worked examples
     └── dashboards/SKILL.md
 ```

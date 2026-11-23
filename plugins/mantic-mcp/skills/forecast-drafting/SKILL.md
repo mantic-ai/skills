@@ -15,8 +15,10 @@ Follow the `using-mantic` rules throughout. In particular, call it a forecast,
 not a question, and call the resolution rules "clarifications", the word
 Mantic's app uses.
 
-Read `checklist.md` in this skill before writing any draft. It holds the rules
-for each field and forecast type, the common failures and worked examples.
+Read `constitution.md` in this skill before writing any draft: it holds the rules
+a question must meet, cited by ID. Then read `checklist.md`, which says how to
+apply them to each field and forecast type, and holds the common failures and
+worked examples.
 
 ## 1. Pin down what the user wants
 
