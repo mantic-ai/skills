@@ -123,10 +123,12 @@ private person's personal life or anyone's death, and sexual content.
 
 ## 6. Create the forecast the user asked for
 
-One draft, or a replacement, is created with `create_question_from_draft`.
-Two or more drafts, or any with a dashboard or scenarios, go in one
-`prepare_actions` review: ask once, then make it with one `execute_actions`
-call. Where those tools aren't available, create all the drafts in one
+Drafts, or a replacement, are created with `create_question_from_draft`,
+several in one call with no `prepare_actions` review; if its reply says their
+cost needs approval, show that cost once for the whole set. Drafts with a
+dashboard or scenarios go in one `prepare_actions` review: ask once, then make
+it with one `execute_actions` call, passing the review's confirmation code if
+it gives one. Where those tools aren't available, create all the drafts in one
 `create_question_from_draft` call after the same single yes. Never ask again
 for each draft or dashboard addition.
 
@@ -136,7 +138,8 @@ with the draft's ID in `question_draft_ids`.
 A forecast the user asked for: create it without asking. Ask first only if
 the request could mean materially different forecasts, the user wants to
 review the draft, or they are only exploring or don't want to spend credits.
-After creating it, state any assumption you made in one line.
+After creating it, state any assumption you made in one line. Several in one
+request need at most one approval for the whole set, never one per forecast.
 
 When you do ask, show the draft in plain form: title, type, the answer options
 or range, supplementary information and clarifications. If the reply says
@@ -144,9 +147,9 @@ nothing was created because the cost needs approval, show that cost, and once
 the user approves call again with the same arguments and the reply's code as
 `confirmation`. Once created, a forecast can't be edited
 through these tools, each draft creates only one forecast, and creating it
-uses the user's question quota and their credits for its first forecast run;
-don't quote a figure for the credits unless a reply gives one. Revise first with `replace_question_draft`
-if they want changes; it replaces the whole draft, so send every field again.
+uses the user's question quota and bills its first forecast run. Mention
+credits only when a reply asks for approval or the user asks about cost.
+Revise first with `replace_question_draft` if they want changes; it replaces the whole draft, so send every field again.
 Delete a draft they no longer want with `delete_question_draft`.
 
 After creating it, tell the user:
@@ -174,11 +177,11 @@ Mantic's own style, up to the limit its description gives; check each against
 `checklist.md` and fix it with `replace_question_draft`, or write each
 yourself through steps 3 to 5. Keep their wording, sources and clarifications
 consistent, and vary only what should vary, such as the date or threshold.
-Show them together in a short table of titles and types, and create them only
-after a yes for the set, through one `prepare_actions` review. A review takes
-a limited number of new forecasts, given in its description: for a larger
-set, offer to review that many now and the rest in a second batch. If a
-review is refused, nothing was created, so fix what it names or leave those
-drafts out, and prepare it again. Once their first forecasts are ready, show the set
+Show them together in a short table of titles and types, and create them all
+in one `create_question_from_draft` call, or one `prepare_actions` review when
+a dashboard or scenarios go with them. A call takes a limited number of new
+forecasts, given in its description: for a larger set, offer to create that
+many now and the rest in a second call. If a call is refused, nothing was
+created, so fix what it names or leave those drafts out, and try again. Once their first forecasts are ready, show the set
 with one `view_questions` call on their IDs rather than `view_question` for
 each.

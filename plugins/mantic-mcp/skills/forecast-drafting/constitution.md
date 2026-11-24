@@ -46,13 +46,12 @@ Each term has one meaning throughout.
 - **Premise**: what the resolution criteria take for granted, apart from the event or
   value the question asks about: that the election will be held, that the figure will be
   published, that the source will exist.
-- **Annulment criteria**: the part of the resolution criteria that says when the
-  question annuls.
 - **Fallback**: what the resolution criteria say resolves the question when their first
   rule cannot be applied.
-- **Credible source**: a journalistic or academic publication, or a body with authority
-  over or direct knowledge of the subject. An unsourced claim on a blog, social media or
-  a personal site is not one.
+- **Credible source**: a journalistic or academic publication, a body with authority over
+  or direct knowledge of the subject, or any source the weight of evidence shows to be
+  correct on the point. A claim whose correctness is in significant dispute is not one,
+  and nor is an unsourced claim on a blog, social media or a personal site.
 - **Forecast**: a probability distribution over the outcome, made at a current time.
 - **Generated question**: one written by Mantic's own pipelines or agents, including an
   agent drafting in the app. An **app question** is written by a user. An **external
@@ -241,7 +240,7 @@ How to write a question. Rules numbered Q are in Questions and T in Output types
 - **W3. One uncertainty.** One question asks one thing. Separate triggers, measures or deadlines are not joined
   with "and" or "or". Two paths to the same final state are one thing.
 - **W4. No hypothetical conditions.** No "if X" or "assuming Y". Ask about the result directly, over a qualifying window that
-  covers it. A condition appears only as annulment criteria on the question's premise
+  covers it. A condition appears only as a premise whose failure annuls the question
   (W23).
 - **W5. Not about evidence.** Do not ask what public evidence will establish about a past incident. A future court
   ruling or official finding is askable when its possible results and the deciding record
@@ -301,13 +300,13 @@ How to write a question. Rules numbered Q are in Questions and T in Output types
   makes the resolving value depend on which source appears splits the forecast in two,
   and is a defect.
 - **W22.** A fallback is never a placeholder value (Q3, T22).
-- **W23. Annulment criteria.** State when the question annuls, with a date: the event is cancelled, the figure is not
-  published by a stated date, the source no longer exists. A numerical or categorical
-  question whose resolving value exists only if some event occurs says that it annuls if the
-  event has not occurred by a stated date. These need no annulment criteria: a count that is
-  truly zero when nothing occurs, an option meaning that none of the others occurred, a
-  routine scheduled release, and the event a binary or date question asks about not
-  occurring (Q3).
+- **W23. When it annuls.** Where a premise could fail, the resolution criteria say when the question annuls, with a
+  date: the event is cancelled, the figure is not published by a stated date, the source no
+  longer exists. A numerical or categorical question whose resolving value exists only if
+  some event occurs says that it annuls if the event has not occurred by a stated date. None
+  is needed for a count that is truly zero when nothing occurs, an option meaning that none
+  of the others occurred, a routine scheduled release, or the event a binary or date
+  question asks about not occurring (Q3).
 
 ## Voice
 
@@ -327,7 +326,7 @@ For a question rewritten into a more informative form.
 - **W27. Exact.** The converted question, with the mapping back, resolves the original exactly: every value
   it can resolve to, including one beyond an open bound, and its annulment, maps to one
   resolution of the original. It keeps the original's subject, source, method, definitions,
-  scope, timing, annulment criteria and fallbacks. Make the smallest edit that does this.
+  scope, timing, when it annuls, and fallbacks. Make the smallest edit that does this.
 - **W28. Thresholds stay in the mapping.** The original's threshold and deadline are not written into the converted question,
   unless they are part of the value's definition.
 - **W29. No proxy.** Do not convert to a quantity the original does not define: a count, where the original

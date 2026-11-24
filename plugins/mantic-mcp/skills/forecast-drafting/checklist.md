@@ -102,7 +102,7 @@ say nothing more than what resolves it (W25).
   makes each outcome happen (W2).
 - **No instructions to the forecaster** ("include a prediction for each date",
   "only consider…"). Clarifications describe the world, not the task.
-- **Annulment.** Give annulment criteria only where W23 asks for them. Do not add
+- **Annulment.** Say when the question annuls only where W23 asks for it. Do not add
   a "resolves ambiguous" clause: a contradiction annuls under Q1.
 - **Keep them tight.** Short paragraphs or bullets, and add a rule only when it
   settles something a reader could otherwise get wrong (W25).

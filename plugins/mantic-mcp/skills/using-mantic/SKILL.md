@@ -198,13 +198,15 @@ Ask for approval once per request, never once per item or step.
 
 - Reads, drafting and checking scenarios change nothing: do them without
   asking.
-- A forecast the user asked for: create it without asking; `forecast-drafting`
-  says when to ask first.
+- Forecasts the user asked for: create them without asking, several in one
+  call with no review; `forecast-drafting` says when to ask first. If the reply
+  says their cost needs approval, show it once for the whole set.
 - Any other single change: show it, get a yes, then call its own tool.
-- Two or more changes (forecasts, dashboard changes, scenarios): put them all
-  in one `prepare_actions` review with its quota and credit implications. The
-  user approves all or names rows, with the card's Approve button or a reply,
-  and one `execute_actions` call makes them.
+- Two or more other changes (dashboard changes, scenarios, or forecasts with
+  either): put them all in one `prepare_actions` review. The user approves
+  all or names rows, with the card's Approve button or a reply, and one
+  `execute_actions` call makes them, with the review's confirmation code if it
+  gives one.
 - Without `prepare_actions` and `execute_actions`: show every change together,
   get one yes, then make each kind of change in one call of its own tool.
 - No tool for the change: say so rather than describe a workaround.
@@ -221,12 +223,10 @@ choose to always allow the tools that only read or draft.
 
 `refresh_forecast` starts a new forecast that takes some minutes. The user's
 request for a refresh is approval enough: call it without asking, unless they
-are only exploring or don't want to spend credits. If the user's organisation
-created the question, it uses their credits for the forecast run once it
-succeeds, and for each of the question's scenarios rerun against it, up to the
-cost the user approved when the reply asked for approval; how many depends on
-their plan, so don't quote a figure the reply doesn't give. Refreshing one of
-Mantic's public questions uses none. If the
+are only exploring or don't want to spend credits. On a question the user's
+organisation created, the run and its scenario reruns are billed, up to any
+cost the user approved; one of Mantic's public questions is free. Mention
+credits only when a reply asks for approval or the user asks about cost. If the
 reply says nothing was refreshed because approval is needed, show the user the
 cost it gives, and after their yes call again with its `confirmation` code. A
 refresh is refused for a resolved or retired question, soon after the last
@@ -357,7 +357,8 @@ question as if it were theirs.
 | The probability above or below a threshold, or by a date | `inspect_forecast`; on each side of a scenario, `get_scenario_cdfs` with `ticks` |
 | What is on one of their dashboards | `list_dashboards` or `search` with `entity` "dashboards", then `search` with its `dashboard_id`, or `search_dashboard_questions` to page through all of it |
 | Add, remove or rename on a dashboard | `add_to_dashboard`, `remove_from_dashboard`, `rename_dashboard`, after the user's yes |
-| Several changes in one request (new forecasts, dashboard changes, scenarios) | one `prepare_actions` review, then `execute_actions` after one yes |
+| Several new forecasts in one request | one `create_question_from_draft` call |
+| Several changes in one request (dashboard changes, scenarios, or new forecasts with either) | one `prepare_actions` review, then `execute_actions` after one yes |
 | Keep following a topic, or what changed on a dashboard | the `dashboards` skill |
 | A fresh forecast of an existing question | `refresh_forecast` when the user asks for one |
 | Notifications when a forecast moves | `turn_on_alerts`, `change_alerts`, `turn_off_alerts`, `get_alerts` |
