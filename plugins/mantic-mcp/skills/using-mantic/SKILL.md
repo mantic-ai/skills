@@ -219,13 +219,19 @@ choose to always allow the tools that only read or draft.
 
 ## Individual changes
 
-`refresh_forecast` starts a new forecast that takes some minutes. If the
-user's organisation created the question, it uses their credits for one
-forecast run once it succeeds; how many depends on their plan, so don't quote
-a figure. Refreshing one of Mantic's public questions uses none. Tell the user
-this and proceed after their unambiguous approval. A refresh is refused for a
-resolved or retired question, soon after the last forecast started, or once a
-scheduled release is published; relay the reason it gives.
+`refresh_forecast` starts a new forecast that takes some minutes. The user's
+request for a refresh is approval enough: call it without asking, unless they
+are only exploring or don't want to spend credits. If the user's organisation
+created the question, it uses their credits for the forecast run once it
+succeeds, and for each of the question's scenarios rerun against it, up to the
+cost the user approved when the reply asked for approval; how many depends on
+their plan, so don't quote a figure the reply doesn't give. Refreshing one of
+Mantic's public questions uses none. If the
+reply says nothing was refreshed because approval is needed, show the user the
+cost it gives, and after their yes call again with its `confirmation` code. A
+refresh is refused for a resolved or retired question, soon after the last
+forecast started, or once a scheduled release is published; relay the reason
+it gives.
 
 `add_to_dashboard`, `remove_from_dashboard` and `rename_dashboard` list the
 change they would make, with a confirmation code, when called without
@@ -353,7 +359,7 @@ question as if it were theirs.
 | Add, remove or rename on a dashboard | `add_to_dashboard`, `remove_from_dashboard`, `rename_dashboard`, after the user's yes |
 | Several changes in one request (new forecasts, dashboard changes, scenarios) | one `prepare_actions` review, then `execute_actions` after one yes |
 | Keep following a topic, or what changed on a dashboard | the `dashboards` skill |
-| A fresh forecast of an existing question | `refresh_forecast`, after the user's yes |
+| A fresh forecast of an existing question | `refresh_forecast` when the user asks for one |
 | Notifications when a forecast moves | `turn_on_alerts`, `change_alerts`, `turn_off_alerts`, `get_alerts` |
 | A new forecast | the `forecast-drafting` skill |
 | A forecast incorporating relevant user-specific context | `create_question_forecast`, then `get_forecast` with the returned ID as `run_id` |
