@@ -166,7 +166,7 @@ The resolving value is a number, with a unit and a range.
 - **T17. Reporting quantum.** It is the increment the source states, or where the source states none, the increment
   inferred from the series history. It is never guessed. A continuous quantity that its
   source rounds still has one. A calculated value is rounded once, at the end, to the
-  reporting quantum; a value exactly halfway between two reported values rounds down.
+  reporting quantum; a value exactly halfway between two reported values rounds away from zero.
   Without a reporting quantum it is not rounded.
 - **T29.** A question on a linear scale declares a reporting quantum where its source publishes the
   resolving value at a fixed increment, and none where the resolving value is an unrounded
