@@ -1,6 +1,6 @@
 ---
 name: dashboards
-description: Use a Mantic dashboard as lasting context on a topic - offering one, building it, catching up on what changed, and keeping its log. Use when the user says they will keep following, watching or tracking a topic (such as "I'll be following the ECB over the next few months"), wants to build or change a dashboard, or asks what has changed on one. To list what is on a dashboard, use using-mantic instead.
+description: Use a Mantic dashboard as lasting context on a topic. Use when the user will keep following a topic, wants to build or change a dashboard or add a situation to one, or asks what changed on one.
 ---
 
 # Dashboards
@@ -11,7 +11,13 @@ situations (real-world matters that change over time, such as an election,
 each carrying forecasts). It may have a constitution saying what it tracks
 (often blank), a log of what was concluded and is being watched, and a
 history of every change. Load [using-mantic](../using-mantic/SKILL.md) too
-before calling any tool: it governs reading and presenting the forecasts.
+before calling any tool: it governs reading and presenting the forecasts. To
+list what is on a dashboard, use using-mantic alone.
+
+This skill covers offering a dashboard, building it, putting situations on it,
+catching up on what changed, and keeping its log. Reach for it when the user
+says they will keep following, watching or tracking a topic (such as "I'll be
+following the ECB over the next few months").
 
 ## Offer one only when it helps
 
@@ -77,6 +83,20 @@ For a single change, or where `prepare_actions` isn't available,
 with a confirmation code. Show it, and repeat the call with that code only
 after the user's yes. Propose only what they asked for, with a
 reason for each forecast added or removed, and relay any refusal as given.
+
+## Situations on a dashboard
+
+To "add the X situation to my Y dashboard", find X with `search_situations`
+and Y with `list_dashboards` or `search` (`entity` "dashboards"), then call
+`add_situation_to_dashboard` once with the `dashboard_id` and every
+`situation_ids`. Don't call `track_situation` first: adding one the
+organisation doesn't track yet tracks it, charged as `track_situation`
+charges. When the reply gives a cost and a confirmation code, show the user
+that cost and call again with the code only after their yes. When it adds at
+once, relay what each cost. `remove_situation_from_dashboard` takes one off
+with no confirmation; the organisation keeps tracking it. When the reply says
+it is now on no dashboard the user can see, offer to untrack it, and call
+`untrack_situation` only after their yes.
 
 ## Keep the log
 

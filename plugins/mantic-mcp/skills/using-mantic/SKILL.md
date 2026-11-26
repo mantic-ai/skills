@@ -367,6 +367,7 @@ question as if it were theirs.
 | The probability above or below a threshold, or by a date | `inspect_forecast`; on each side of a scenario, `get_scenario_cdfs` with `ticks` |
 | What is on one of their dashboards | `list_dashboards` or `search` with `entity` "dashboards", then `search` with its `dashboard_id`, or `search_dashboard_questions` to page through all of it |
 | Add, remove or rename on a dashboard | `add_to_dashboard`, `remove_from_dashboard`, `rename_dashboard`, after the user's yes |
+| Put a situation on a dashboard, or take one off | `add_situation_to_dashboard` or `remove_situation_from_dashboard` (the `dashboards` skill), not `track_situation` |
 | Several new forecasts in one request | one `create_question_from_draft` call |
 | Several changes in one request (dashboard changes, scenarios, or new forecasts with either) | one `prepare_actions` review, then `execute_actions` after one yes |
 | Keep following a topic, or what changed on a dashboard | the `dashboards` skill |
