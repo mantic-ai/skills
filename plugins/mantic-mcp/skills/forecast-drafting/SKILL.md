@@ -44,9 +44,14 @@ Call `search` with the outcome in the user's own words, and read the
 
 - **One already answers it:** show it, following `using-mantic`, and offer to
   add it to a dashboard with `add_to_dashboard`. Draft a new one only
-  if the user still wants their own version.
+  if the user still wants their own version. A numerical or date forecast of
+  the same quantity and period already answers a threshold or deadline
+  question on it when its range or horizon reaches that threshold or
+  deadline; see W9. One that stops short of it is close but different.
 - **Close but different:** show the closest one to three in a short table,
   say in a sentence how each differs from what the user asked, then draft.
+  These include forecasts that can't answer the request, such as a yes or no
+  forecast on another threshold, or one for another period or date.
 - **Nothing relevant:** say so and draft.
 
 ## 3. Choose the forecast type
@@ -157,6 +162,8 @@ After creating it, tell the user:
 - what was created: title, type and the answer options or range, with any
   changes you made to their wording and a sentence on why for each
 - the forecast's link, `https://app.mantic.com/question/{id}`
+- the close but different forecasts from step 2, briefly, with how each
+  differs as in step 2, even if you showed them earlier
 - that Mantic has started its first forecast, which usually takes a few
   minutes, and they'll get a notification when it's ready, or you can check
   with `view_question`
@@ -171,9 +178,10 @@ Undo for five seconds before submission; launched runs cannot be stopped through
 ## Sets of forecasts
 
 For several related forecasts, search for each first (step 2) and offer any
-forecast Mantic already has, then confirm with the user which still need
-drafting. `draft_questions` drafts several at once from the user's words, in
-Mantic's own style, up to the limit its description gives; check each against
+forecast Mantic already has, show any close but different ones as in step 2,
+then confirm with the user which still need drafting.
+`draft_questions` drafts several at once from the user's words, in Mantic's
+own style, up to the limit its description gives; check each against
 `checklist.md` and fix it with `replace_question_draft`, or write each
 yourself through steps 3 to 5. Keep their wording, sources and clarifications
 consistent, and vary only what should vary, such as the date or threshold.

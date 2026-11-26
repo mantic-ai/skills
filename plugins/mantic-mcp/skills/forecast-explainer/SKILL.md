@@ -129,7 +129,9 @@ including news that didn't move it:
   Mantic hasn't re-forecast the question yet. Say so plainly: the forecast
   doesn't reflect the event, and it isn't evidence that the event doesn't
   matter. Offer to refresh it, and call `refresh_forecast` only after the
-  user's yes.
+  user's yes. Reasoning written before the event can't be Mantic's view of
+  it: report what it assumed at the time, with its date, but don't say
+  Mantic expected, discounted or judged the event.
 - **Forecasts since the event, little movement.** Call `get_forecast` with the
   first forecast after the event as `run_id` and look for the event in its
   reasoning. If
@@ -141,7 +143,10 @@ including news that didn't move it:
 Describing the event itself, if it came from you rather than Mantic, belongs
 under your view, in italics. So does any judgement of how the event bears on
 the forecast or its resolution that Mantic's reasoning doesn't make, even when
-the user told you about the event.
+the user told you about the event. That includes applying the clarifications
+to the event, such as saying it now makes an outcome count: keep it beside
+the news it depends on, and add nothing about how the event resolves the
+question to the timing explanation.
 
 ## 5. Show what would change it
 
@@ -214,6 +219,12 @@ Keep it short enough to read in a minute:
      forecast's `forecast_id` as `run_id`, one call per kind of figure, so
      the two rows compare like with like. If the latest forecast is
      Mantic's first, skip the table and say so in one line.
+   - For a numerical forecast, both rows give the median and the 25th–75th
+     percentile: the latest's from `view_question`'s `percentiles`, the
+     previous one's from one `inspect_forecast` call asking for the 25th,
+     50th and 75th percentiles together. Use these even when the history
+     quotes the most likely value and 80% range, and don't give another
+     range as the 25th–75th percentile anywhere in the answer.
    - For a missing percentile on a date question, write "after" plus the
      forecast's horizon, the last date in its CDF, as in the example above.
      If the CDF is unavailable, follow `using-mantic` to fetch it or report
@@ -237,8 +248,9 @@ Keep it short enough to read in a minute:
 5. **What would change it.** The top scenarios, with both sides. Leave
    this section out when the question has no scenarios.
 6. **Related Mantic forecasts, if any.** The questions from step 6, each by
-   short linked title with its own forecast and date, and a few words on how
-   it relates, such as "narrower: charges against a developer only". Give
+   short linked title with its own forecast and date, and in a few words
+   every way it differs, such as "narrower: charges against a developer
+   only". Give
    each forecast the way the `using-mantic` table does, including its rules
    for missing date percentiles and retrieving the actual horizon. These are
    Mantic's data, so don't put them under your view.
@@ -250,7 +262,8 @@ Keep it short enough to read in a minute:
 Write only these sections, in this order, with nothing between them. The
 one exception: if the user also asked a direct question, such as whether a
 particular event would count, answer it in one or two sentences before the
-summary, from the `clarifications` where it's about resolution. When
+summary, from the `clarifications` where it's about resolution: say what
+they require, and leave whether a new event meets them to your view. When
 the user asked how the forecast has changed, move **How it has moved**
 straight after the summary, and cut **Why** to one or two sentences on the
 current forecast, so the same points don't appear twice.

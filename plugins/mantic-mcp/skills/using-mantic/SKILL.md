@@ -135,7 +135,9 @@ topic, use theirs.
     31 Dec 2026"
   - numerical: the median, with units, written as "median 2.8%". The
     question page leads with the most likely value and its 80% range
-    instead, which `view_question`'s `statement` gives
+    instead, which `view_question`'s `statement` gives. Tables and
+    comparisons still use the median and percentiles, as
+    `forecast-explainer` sets out
   - date: the median date, to the day. The question page gives the median
     only when it falls within the forecast's default range; otherwise it gives
     the chance by the end of that range, such as "20% by 1 Mar 2027", and the
@@ -272,7 +274,11 @@ If you have a relevant view of your own, for example news newer than the
 forecast date, put it after Mantic's forecast, in italics, starting with
 "*My view, not Mantic's:*". Never blend the two so the user can't tell which
 is which. Other Mantic forecasts are Mantic's data, not your view: present
-them as related Mantic forecasts.
+them as related Mantic forecasts. A bound or estimate you infer from one is
+your view and goes in that italic paragraph: an upper bound on a 50 basis
+point cut inferred from a forecast of a cut of any size is your inference,
+not Mantic's forecast for a 50 basis point cut. Keep the related forecast's
+own figure, date and link in the Mantic account.
 
 Any criticism, correction or assessment of Mantic's output also goes in that
 italic "*My view, not Mantic's:*" paragraph, never in the main text. That
@@ -308,6 +314,10 @@ When a search returns nothing relevant, or only loosely related questions,
 say so. Do not stretch a question about a different event, date, or threshold
 to fit. Offer to set up a new forecast instead, following the
 `forecast-drafting` skill, if the user wants Mantic to forecast it.
+
+For each related forecast you list, say every way it differs from what the
+user asked, such as a different threshold, outcome, period or deadline;
+saying only that they differ isn't enough.
 
 ## Read the question exactly
 
