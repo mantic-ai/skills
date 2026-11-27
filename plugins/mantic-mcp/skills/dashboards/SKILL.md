@@ -1,6 +1,6 @@
 ---
 name: dashboards
-description: Use a Mantic dashboard as lasting context on a topic. Use when the user will keep following a topic, wants to build or change a dashboard or add a situation to one, or asks what changed on one.
+description: Use a Mantic dashboard as lasting context on a topic. Use when the user will keep following or tracking a topic ("I'll be following the ECB for months"), wants to build or change a dashboard or add a situation to one, or asks what changed on one.
 ---
 
 # Dashboards
@@ -15,9 +15,7 @@ before calling any tool: it governs reading and presenting the forecasts. To
 list what is on a dashboard, use using-mantic alone.
 
 This skill covers offering a dashboard, building it, putting situations on it,
-catching up on what changed, and keeping its log. Reach for it when the user
-says they will keep following, watching or tracking a topic (such as "I'll be
-following the ECB over the next few months").
+catching up on what changed, and keeping its log.
 
 ## Offer one only when it helps
 
