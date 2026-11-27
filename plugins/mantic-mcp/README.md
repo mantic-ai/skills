@@ -28,6 +28,14 @@ claude plugin marketplace add mantic-ai/skills
 claude plugin install mantic-mcp@mantic
 ```
 
+## Releasing
+
+Any change to a file this plugin ships (everything here except `evals/` and
+this README, including the generated `constitution.md`) raises `version` in both
+`.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`: patch for fixes,
+minor for a new skill or capability. Claude Code only updates installs when the
+version changes; CI checks it.
+
 ## Layout
 
 ```

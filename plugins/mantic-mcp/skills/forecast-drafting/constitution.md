@@ -23,8 +23,8 @@ Each term has one meaning throughout.
 - **Question**: a request for one fact about the world that is not yet known and will
   later be settled by a public record.
 - **Title**: Short, self-contained question title, at most one sentence.
-- **Context**: Relevant factual background that helps understand the question: the entities involved, the current situation, and recent events.
-- **Resolution criteria**: Operational rule for what observable outcome or value resolves the question, and its source.
+- **Context**: Relevant factual background that helps understand the question: the entities involved, the situation at the question's as_of, and recent events.
+- **Resolution criteria**: Operational rule for what observable event or value resolves the question, and its source.
 - **Output type**: The kind of value a question resolves to, which fixes the shape of its outcome.
 - **Outcome**: The question's authored outcome space.
 - **Resolving value**: the one value in the outcome that the question resolves to.
@@ -134,7 +134,7 @@ The resolving value is Yes or No.
 
 The resolving value is one of several mutually exclusive named options.
 
-- `options`: Mutually exclusive, collectively exhaustive named options with names unique ignoring case; include Other when the named options are not exhaustive.
+- `options`: Mutually exclusive, collectively exhaustive named options with names unique ignoring case.
 
 - **T11.** A categorical question has at least 3 options.
 - **T12.** The question resolves to exactly one option, and the resolution criteria resolve it to
@@ -191,9 +191,9 @@ The resolving value is a number, with a unit and a range.
 The resolving value is a date or timestamp.
 
 - `range_min`: UTC-grid start of the earliest admissible scoring period, inclusive.
-- `range_max`: Exclusive end of the authored forecast horizon, in UTC.
+- `range_max`: Exclusive end of the authored forecast horizon, in UTC: the first instant after its final scored period.
 - `open_upper_bound`: Whether dates at or after the exclusive range_max may resolve.
-- `precision`: UTC calendar granularity of the authored date scoring grid; range_max is aligned to the first instant after its final scored period.
+- `precision`: UTC calendar granularity of the authored date scoring grid.
 
 - **T23.** The resolving value is when one discrete event first occurs in the qualifying window.
   The first time a value crosses a threshold is such an event. A date question is not used

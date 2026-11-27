@@ -164,7 +164,9 @@ topic, use theirs.
 
 Use each question's `latest_forecast` in the search results to fill the table,
 fetching the CDF only when needed for a missing percentile's horizon as above.
-Don't routinely open every question. `search` returns 6 questions unless you
+Don't fetch the questions one by one for values the search rows already hold.
+Still show the results that answer the ask: `view_question` for one,
+`view_questions` for several. `search` returns 6 questions unless you
 raise `limit` (at most 25), so raise it for a broad topic. For `search` and
 `search_dashboard_questions`, pass `show_forecasts: true` so the values come
 back. If a row's forecast is redacted, write "hidden" in its cells and follow
